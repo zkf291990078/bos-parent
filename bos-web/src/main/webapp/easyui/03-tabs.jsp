@@ -20,16 +20,38 @@
 		-->
 		<div class="easyui-accordion" data-options="fit:true">
 			<!-- 使用子div表示每个面板 -->
-			<div data-options="iconCls:'icon-cut'" title="面板一">1111</div>
+			<div data-options="iconCls:'icon-cut'" title="面板一">1111
+			<a id="but1" class="easyui-linkbutton">添加一个选项卡</a>
+				<script type="text/javascript">
+				$(function() {
+					$("#but1").click(function() {
+						var e= $("#mytabs").tabs("exists","系统管理");
+						if(e){
+							$("#mytabs").tabs("select","系统管理");
+						}else{
+							$("#mytabs").tabs("add",{
+								title:'系统管理',
+								iconCls:'icon-edit',
+								closable:true,
+								content:'<iframe frameborder="0" height="100%" width="100%" src="https://www.baidu.com"></iframe>'
+
+							});
+						}
+					});
+				});
+			</script>
+			</div>
 			<div title="面板二">2222</div>
 			<div title="面板三">3333</div>
 		</div>
 	</div>
-	<div data-options="region:'center'">
+	<div  data-options="region:'center'">
 		<!-- 制作一个tabs选项卡面板 -->
-		<div class="easyui-tabs" data-options="fit:true">
+		<div id="mytabs" class="easyui-tabs" data-options="fit:true">
 			<!-- 使用子div表示每个面板 -->
+				
 			<div data-options="iconCls:'icon-cut'" title="面板一">1111</div>
+		
 			<div data-options="closable:true" title="面板二">2222</div>
 			<div title="面板三">3333</div>
 		</div>
