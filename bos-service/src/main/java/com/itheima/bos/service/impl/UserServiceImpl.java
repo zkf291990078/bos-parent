@@ -25,5 +25,12 @@ public class UserServiceImpl implements UserService {
 		return u;
 	}
 
+	@Override
+	public void editPassword(String id, String password) {
+		// TODO Auto-generated method stub
+		password=MD5Utils.md5(password);
+		userDao.executeUpdate("user.editPwd", password,id);
+	}
+
 	
 }

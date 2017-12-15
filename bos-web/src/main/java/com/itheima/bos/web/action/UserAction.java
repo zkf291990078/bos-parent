@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.itheima.bos.domain.User;
 import com.itheima.bos.service.UserService;
+import com.itheima.bos.utils.BOSUtils;
 import com.itheima.bos.web.action.base.BaseAction;
 
 @Controller
@@ -15,6 +16,7 @@ import com.itheima.bos.web.action.base.BaseAction;
 public class UserAction extends BaseAction<User> {
 
 	private String checkcode;
+
 	@Autowired
 	private UserService userService;
 
@@ -42,8 +44,25 @@ public class UserAction extends BaseAction<User> {
 		return LOGIN;
 	}
 
+	public String editPassword() throws Exception {
+		// TODO Auto-generated method stub
+		User user = BOSUtils.getLoginUser();
+	
+		int f = 1;
+		try {
+			userService.editPassword(user.getId(), model.getPassword());
+		} catch (Exception e) {
+			// TODO: handle exception
+			f = 0;
+		}
+		ServletActionContext.getResponse().setContentType("text/html,charset=utf-8");
+		ServletActionContext.getResponse().getWriter().print(f);
+		return NONE;
+	}
+
 	public void setCheckcode(String checkcode) {
 		this.checkcode = checkcode;
 	}
+
 
 }
