@@ -61,7 +61,31 @@
 	}
 
 	function doDelete() {
-		alert("删除...");
+
+		var rows = $('#grid').datagrid('getSelections');
+		if (rows.length > 0) {
+			$.messager
+					.confirm(
+							"删除确认",
+							"你确定要删除选中的取派员吗？",
+							function(r) {
+								if (r) {
+									var array = new Array();
+									for (var i = 0; i < rows.length; i++) {
+										var staff = rows[i];//json对象
+										var id = staff.id;
+										array.push(id);
+									}
+									var ids = array.join(",");
+									location.href = "StaffAction_deleteBatch.action?ids="
+											+ ids;
+									;
+								}
+							});
+
+		} else {
+			$.messager.alert("标题", "请选择删除项", "warning");
+		}
 	}
 
 	function doRestore() {
@@ -155,7 +179,7 @@
 			pageList : [ 30, 50, 100 ],
 			pagination : true,
 			toolbar : toolbar,
-			url : "json/staff.json",
+			url : "StaffAction_pageQuery.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
@@ -175,7 +199,8 @@
 	});
 
 	function doDblClickRow(rowIndex, rowData) {
-		alert("双击表格数据...");
+		$('#addStaffWindow').window("open");
+		$('#addStaffWindow').form("load",rowData);
 	}
 </script>
 </head>
@@ -207,7 +232,10 @@
 					<tr>
 						<td>姓名</td>
 						<td><input type="text" name="name" class="easyui-validatebox"
-							required="true" /></td>
+							required="true" />
+							<input type="hidden" name="id" />
+							<input type ="hidden" name="deltag" />
+							</td>
 					</tr>
 					<tr>
 						<td>手机</td>

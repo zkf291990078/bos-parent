@@ -10,9 +10,13 @@ import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.itheima.bos.dao.base.IBaseDao;
+import com.itheima.bos.utils.PageBean;
 
 public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 
@@ -72,6 +76,26 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 			query.setParameter(i++, o);
 		}
 		query.executeUpdate();
+	}
+
+	@Override
+	public void queryPageBean(PageBean pageBean) {
+		int currentPage = pageBean.getCurrentPage();
+		int pageSize = pageBean.getPageSize();
+		int firstResult = (currentPage - 1) * pageSize;
+		DetachedCriteria detachedCriteria = pageBean.getDetachedCriteria();
+		detachedCriteria.setProjection(Projections.rowCount());
+		List<Long> counts = (List<Long>) getHibernateTemplate().findByCriteria(detachedCriteria);
+		pageBean.setTotal(counts.get(0).intValue());
+		detachedCriteria.setProjection(null);
+		List list = getHibernateTemplate().findByCriteria(detachedCriteria, firstResult, pageSize);
+		pageBean.setRows(list);
+	}
+
+	@Override
+	public void saveOrUpdate(T t) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().saveOrUpdate(t);
 	}
 
 }
