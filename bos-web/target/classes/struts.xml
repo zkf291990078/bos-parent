@@ -43,7 +43,7 @@
 			<result name="list">/WEB-INF/pages/base/region.jsp</result>
 		</action>
 		<action name="SubareaAction_*" class="subareaAction" method="{1}"> 
-			<result name="list">/WEB-INF/pages/base/subarea.jsp</result>
+			<result name="list" >/WEB-INF/pages/base/subarea.jsp</result>
 		</action>
 	</package>
 </struts>

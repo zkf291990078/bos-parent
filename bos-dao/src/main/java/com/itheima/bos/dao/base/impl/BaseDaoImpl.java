@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.itheima.bos.dao.base.IBaseDao;
@@ -88,6 +89,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 		List<Long> counts = (List<Long>) getHibernateTemplate().findByCriteria(detachedCriteria);
 		pageBean.setTotal(counts.get(0).intValue());
 		detachedCriteria.setProjection(null);
+		detachedCriteria.setResultTransformer(DetachedCriteria.ROOT_ENTITY);
+		
 		List list = getHibernateTemplate().findByCriteria(detachedCriteria, firstResult, pageSize);
 		pageBean.setRows(list);
 	}
