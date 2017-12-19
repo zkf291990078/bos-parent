@@ -39,5 +39,11 @@
 		<action name="StaffAction_*" class="staffAction" method="{1}"> 
 			<result name="list">/WEB-INF/pages/base/staff.jsp</result>
 		</action>
+		<action name="RegionAction_*" class="regionAction" method="{1}"> 
+			<result name="list">/WEB-INF/pages/base/region.jsp</result>
+		</action>
+		<action name="SubareaAction_*" class="subareaAction" method="{1}"> 
+			<result name="list">/WEB-INF/pages/base/subarea.jsp</result>
+		</action>
 	</package>
 </struts>
