@@ -15,8 +15,17 @@ public class Decidedzone implements java.io.Serializable {
 	private Staff staff;
 	private String name;
 	private Set subareas = new HashSet(0);
+	private String[] subareaid;
 
 	// Constructors
+
+	public String[] getSubareaid() {
+		return subareaid;
+	}
+
+	public void setSubareaid(String[] subareaid) {
+		this.subareaid = subareaid;
+	}
 
 	/** default constructor */
 	public Decidedzone() {

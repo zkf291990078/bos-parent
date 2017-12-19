@@ -96,4 +96,11 @@ public class SubareaAction extends BaseAction<Subarea> {
 		workbook.write(outputStream);
 		return NONE;
 	}
+	
+	public String listajax() throws Exception {
+		// TODO Auto-generated method stub
+		List<Subarea> subareas=subareaService.findSubareaNoDecidedzone();
+		java2Json(subareas, new String[]{"decidedzone", "region"});
+		return NONE;
+	}
 }

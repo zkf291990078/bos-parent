@@ -3,6 +3,8 @@ package com.itheima.bos.dao.base;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 import com.itheima.bos.utils.PageBean;
 
 public interface IBaseDao<T> {
@@ -20,4 +22,5 @@ public interface IBaseDao<T> {
 	
 	public void queryPageBean(PageBean pageBean);
 	public void saveOrUpdate(T t);
+	public List<T> findDataByCriteria(DetachedCriteria criteria);
 }

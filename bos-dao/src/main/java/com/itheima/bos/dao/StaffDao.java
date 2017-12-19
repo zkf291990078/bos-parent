@@ -5,6 +5,8 @@ import com.itheima.bos.domain.Staff;
 
 public interface StaffDao extends IBaseDao<Staff> {
 
+	 
+
 	
 
 }

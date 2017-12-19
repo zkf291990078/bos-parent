@@ -2,6 +2,8 @@ package com.itheima.bos.service.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,15 @@ public class SubareaServiceImpl implements SubareaService {
 	public List<Subarea> findAll() {
 		// TODO Auto-generated method stub
 		return subareaDao.findAll();
+	}
+
+	@Override
+	public List<Subarea> findSubareaNoDecidedzone() {
+		// TODO Auto-generated method stub
+		DetachedCriteria criteria = DetachedCriteria.forClass(Subarea.class);
+		criteria.add(Restrictions.isNull("decidedzone"));
+
+		return subareaDao.findDataByCriteria(criteria);
 	}
 
 }

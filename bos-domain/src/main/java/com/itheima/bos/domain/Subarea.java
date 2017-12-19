@@ -19,6 +19,10 @@ public class Subarea implements java.io.Serializable {
 
 	// Constructors
 
+	public String getSubareaid() {
+		return id;
+	}
+
 	/** default constructor */
 	public Subarea() {
 	}
@@ -29,9 +33,8 @@ public class Subarea implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Subarea(String id, Decidedzone decidedzone, Region region,
-			String addresskey, String startnum, String endnum, String single,
-			String position) {
+	public Subarea(String id, Decidedzone decidedzone, Region region, String addresskey, String startnum, String endnum,
+			String single, String position) {
 		this.id = id;
 		this.decidedzone = decidedzone;
 		this.region = region;

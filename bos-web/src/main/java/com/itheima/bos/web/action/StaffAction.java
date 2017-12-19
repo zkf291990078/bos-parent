@@ -1,5 +1,7 @@
 package com.itheima.bos.web.action;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
@@ -18,7 +20,6 @@ import net.sf.json.JsonConfig;
 @Controller
 @Scope("prototype")
 public class StaffAction extends BaseAction<Staff> {
-
 
 	@Autowired
 	private StaffService staffService;
@@ -53,6 +54,13 @@ public class StaffAction extends BaseAction<Staff> {
 		// TODO Auto-generated method stub
 		staffService.deleteBatch(ids);
 		return LIST;
+	}
+
+	public String listajax() throws Exception {
+		// TODO Auto-generated method stub
+		List<Staff> staffs = staffService.findStaffNoDele();
+		java2Json(staffs, new String[] { "decidedzones" });
+		return NONE;
 	}
 
 	public void setIds(String ids) {
