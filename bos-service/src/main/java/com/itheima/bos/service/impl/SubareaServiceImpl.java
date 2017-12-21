@@ -53,4 +53,12 @@ public class SubareaServiceImpl implements SubareaService {
 		return subareaDao.findDataByCriteria(criteria);
 	}
 
+	@Override
+	public List<Subarea> findSssoginSubarea(String decidedzone_id) {
+		// TODO Auto-generated method stub
+		DetachedCriteria criteria = DetachedCriteria.forClass(Subarea.class);
+		criteria.add(Restrictions.eq("decidedzone.id", decidedzone_id));
+		return subareaDao.findDataByCriteria(criteria);
+	}
+
 }

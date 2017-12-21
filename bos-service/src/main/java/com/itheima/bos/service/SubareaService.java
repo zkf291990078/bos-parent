@@ -17,4 +17,5 @@ public interface SubareaService {
 
 	List<Subarea> findSubareaNoDecidedzone();
 
+	List<Subarea> findSssoginSubarea(String decidedzone_id);
 }
