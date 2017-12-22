@@ -31,6 +31,31 @@ public interface ICustomerService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "findCustomersByTelephone", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindCustomersByTelephone")
+    @ResponseWrapper(localName = "findCustomersByTelephoneResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindCustomersByTelephoneResponse")
+    public List<Customer> findCustomersByTelephone(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<com.itheima.crm.Customer>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "findListNotAssociation", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListNotAssociation")
+    @ResponseWrapper(localName = "findListNotAssociationResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListNotAssociationResponse")
+    public List<Customer> findListNotAssociation();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<com.itheima.crm.Customer>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "findListByAssociation", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListByAssociation")
     @ResponseWrapper(localName = "findListByAssociationResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListByAssociationResponse")
     public List<Customer> findListByAssociation(
@@ -53,14 +78,17 @@ public interface ICustomerService {
 
     /**
      * 
+     * @param arg0
      * @return
-     *     returns java.util.List<com.itheima.crm.Customer>
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "findAll", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindAll")
-    @ResponseWrapper(localName = "findAllResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindAllResponse")
-    public List<Customer> findAll();
+    @RequestWrapper(localName = "findDecidedzoneIdByAddress", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindDecidedzoneIdByAddress")
+    @ResponseWrapper(localName = "findDecidedzoneIdByAddressResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindDecidedzoneIdByAddressResponse")
+    public String findDecidedzoneIdByAddress(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
     /**
      * 
@@ -69,8 +97,8 @@ public interface ICustomerService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "findListNotAssociation", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListNotAssociation")
-    @ResponseWrapper(localName = "findListNotAssociationResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindListNotAssociationResponse")
-    public List<Customer> findListNotAssociation();
+    @RequestWrapper(localName = "findAll", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindAll")
+    @ResponseWrapper(localName = "findAllResponse", targetNamespace = "http://server.anywell.com/", className = "com.itheima.crm.FindAllResponse")
+    public List<Customer> findAll();
 
 }

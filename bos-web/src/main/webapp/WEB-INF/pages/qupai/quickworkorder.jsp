@@ -164,6 +164,11 @@
 			onDblClickRow : doDblClickRow,
 			onAfterEdit : function(rowIndex, rowData, changes){
 				console.info(rowData);
+				$.post('WorkordermanageAction_add.action',rowData,function(data){
+					if(data == '0'){
+						$.messager.alert("提示信息","工作单信息录入失败！","error");
+					}
+				});
 				editIndex = undefined;
 			}
 		});
@@ -172,6 +177,7 @@
 	function doDblClickRow(rowIndex, rowData){
 		alert("双击表格数据...");
 		console.info(rowIndex);
+		$('#grid').datagrid('endEdit',editIndex);
 		$('#grid').datagrid('beginEdit',rowIndex);
 		editIndex = rowIndex;
 	}
