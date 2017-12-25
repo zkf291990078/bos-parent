@@ -3,6 +3,7 @@ package com.itheima.bos.web.action;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,10 +41,11 @@ public class StaffAction extends BaseAction<Staff> {
 		// TODO Auto-generated method stub
 
 		staffService.queryPageBean(pageBean);
-		java2Json(pageBean, new String[] { "currentPage", "detachedCriteria", "pageSize","decidedzones" });
+		java2Json(pageBean, new String[] { "currentPage", "detachedCriteria", "pageSize", "decidedzones" });
 		return NONE;
 	}
 
+	@RequiresPermissions("staff-delete")
 	public String deleteBatch() throws Exception {
 		// TODO Auto-generated method stub
 		staffService.deleteBatch(ids);

@@ -5,4 +5,6 @@ import com.itheima.bos.domain.User;
 
 public interface UserDao extends IBaseDao<User> {
    public User findUserByUsernameAndPassword(String username,String password);
+
+	public User findUserByUsername(String username);
 }

@@ -22,4 +22,15 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		return null;
 	}
 
+	@Override
+	public User findUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		String hql = "from User where username=? ";
+		List users = getHibernateTemplate().find(hql, username);
+		if (users != null && users.size() > 0) {
+			return (User) users.get(0);
+		}
+		return null;
+	}
+
 }

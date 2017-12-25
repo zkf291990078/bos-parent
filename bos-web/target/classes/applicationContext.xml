@@ -19,6 +19,38 @@
 	<!-- 加载属性文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
 
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="/index.jsp" />
+		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
+		<property name="filterChainDefinitions">
+			<value>
+				/css/**=anon
+				/js/**=anon
+				/images/**=anon
+				/login.jsp*=anon
+				/validatecode.jsp*=anon
+				/UserAction_login=anon
+				/page_base_staff=perms["staff"]
+				/*=authc
+			</value>
+		</property>
+	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="bosRealm"></property>
+	</bean>
+
+	<bean id="bosRealm" class="com.itheima.shiro.BOSRealm" />
+
+	<bean id="defaultAdvisorAutoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		<property name="proxyTargetClass" value="true"></property>
+	</bean>
+	
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" />
+
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}" />
@@ -60,8 +92,8 @@
 	<context:component-scan base-package="com.itheima.bos"></context:component-scan>
 	<!-- 支持spring注解 -->
 	<context:annotation-config />
-	<tx:annotation-driven/>
-	
+	<tx:annotation-driven />
+
 	<!-- 注册crm客户端代理对象 -->
 	<jaxws:client id="crmClient" serviceClass="com.itheima.crm.ICustomerService"
 		address="http://localhost:8080/CrmServer/service/customer"></jaxws:client>

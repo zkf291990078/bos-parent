@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@  taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -102,12 +103,17 @@
 		text : '增加',
 		iconCls : 'icon-add',
 		handler : doAdd
-	}, {
+	},
+	
+	<shiro:hasPermission name="staff-delete">
+	{
 		id : 'button-delete',
 		text : '作废',
 		iconCls : 'icon-cancel',
 		handler : doDelete
-	}, {
+	}, 
+	</shiro:hasPermission>
+	{
 		id : 'button-save',
 		text : '还原',
 		iconCls : 'icon-save',
@@ -232,10 +238,8 @@
 					<tr>
 						<td>姓名</td>
 						<td><input type="text" name="name" class="easyui-validatebox"
-							required="true" />
-							<input type="hidden" name="id" />
-							<input type ="hidden" name="deltag" />
-							</td>
+							required="true" /> <input type="hidden" name="id" /> <input
+							type="hidden" name="deltag" /></td>
 					</tr>
 					<tr>
 						<td>手机</td>
