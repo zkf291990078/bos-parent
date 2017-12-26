@@ -26,6 +26,11 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath }/js/highcharts/highcharts.js"></script>
+<script
+	src="${pageContext.request.contextPath }/js/highcharts/modules/exporting.js"></script>
+
 <script type="text/javascript">
 	function doAdd() {
 		$('#addSubareaWindow').window("open");
@@ -44,11 +49,29 @@
 	}
 
 	function doExport() {
-		window.location.href="SubareaAction_exportXls.action";
+		window.location.href = "SubareaAction_exportXls.action";
 	}
 
 	function doImport() {
 		alert("导入");
+	}
+	function doShowHighcharts() {
+		$("#showSubareaWindow").window("open");
+		//页面加载完成后，动态创建图表
+		$.post("SubareaAction_findSubareasGroupByProvince.action", function(
+				data) {
+			$("#test").highcharts({
+				title : {
+					text : '区域分区分布图'
+				},
+				series : [ {
+					type : 'pie',
+					name : '区域分区分布图',
+					data : data
+				} ]
+			});
+		});
+
 	}
 
 	//工具栏
@@ -82,6 +105,11 @@
 		text : '导出',
 		iconCls : 'icon-undo',
 		handler : doExport
+	}, {
+		id : 'button-showHighcharts',
+		text : '显示区域分区分布图',
+		iconCls : 'icon-search',
+		handler : doShowHighcharts
 	} ];
 	// 定义列
 	var columns = [ [ {
@@ -167,7 +195,15 @@
 			columns : columns,
 			onDblClickRow : doDblClickRow
 		});
-
+		showSubareaWindow
+		$('#showSubareaWindow').window({
+			width : 600,
+			modal : true,
+			shadow : true,
+			closed : true,
+			height : 400,
+			resizable : false
+		});
 		// 添加、修改分区
 		$('#addSubareaWindow').window({
 			title : '添加修改分区',
@@ -194,27 +230,29 @@
 			height : 400,
 			resizable : false
 		});
-		$.fn.serializeJson=function(){  
-            var serializeObj={};  
-            var array=this.serializeArray();
-            $(array).each(function(){  
-                if(serializeObj[this.name]){  
-                    if($.isArray(serializeObj[this.name])){  
-                        serializeObj[this.name].push(this.value);  
-                    }else{  
-                        serializeObj[this.name]=[serializeObj[this.name],this.value];  
-                    }  
-                }else{  
-                    serializeObj[this.name]=this.value;   
-                }  
-            });  
-            return serializeObj;  
-        }; 
+		$.fn.serializeJson = function() {
+			var serializeObj = {};
+			var array = this.serializeArray();
+			$(array).each(
+					function() {
+						if (serializeObj[this.name]) {
+							if ($.isArray(serializeObj[this.name])) {
+								serializeObj[this.name].push(this.value);
+							} else {
+								serializeObj[this.name] = [
+										serializeObj[this.name], this.value ];
+							}
+						} else {
+							serializeObj[this.name] = this.value;
+						}
+					});
+			return serializeObj;
+		};
 		$("#btn").click(function() {
-			var p=$('#searchForm').serializeJson();
+			var p = $('#searchForm').serializeJson();
 			console.info(p);
 			//调用数据表格的load方法，重新发送一次ajax请求，并且提交参数
-			$("#grid").datagrid("load",p);
+			$("#grid").datagrid("load", p);
 			//关闭查询窗口
 			$("#searchWindow").window("close");
 
@@ -300,7 +338,7 @@
 		collapsible="false" minimizable="false" maximizable="false"
 		style="top: 20px; left: 200px">
 		<div style="overflow: auto; padding: 5px;" border="false">
-			<form id="searchForm" >
+			<form id="searchForm">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">查询条件</td>
@@ -330,5 +368,12 @@
 			</form>
 		</div>
 	</div>
+
+	<div class="easyui-window" title="分区分布图" id="showSubareaWindow"
+		collapsible="false" minimizable="false" maximizable="false"
+		style="top: 20px; left: 200px">
+		<div id="test" style="padding: 5px;" border="false"></div>
+	</div>
+
 </body>
 </html>

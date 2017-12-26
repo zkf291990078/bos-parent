@@ -12,5 +12,7 @@ public interface FunctionService {
 	public void save(Function model);
 
 	public void queryPage(PageBean pageBean);
+
+	public List<Function> findAllMenu();
 	
 }

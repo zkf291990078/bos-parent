@@ -41,4 +41,11 @@ public class FunctionAction extends BaseAction<Function> {
 		java2Json(pageBean, new String[] { "parentFunction", "roles", "children" });
 		return NONE;
 	}
+
+	public String findAllMenu() throws Exception {
+		// TODO Auto-generated method stub
+		List<Function> list= functionService.findAllMenu();
+		java2Json(list,  new String[] { "parentFunction", "roles", "children" });
+		return NONE;
+	}
 }

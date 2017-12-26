@@ -61,4 +61,11 @@ public class SubareaServiceImpl implements SubareaService {
 		return subareaDao.findDataByCriteria(criteria);
 	}
 
+	@Override
+	public List<Object> findSubareasGroupByProvince() {
+		// TODO Auto-generated method stub
+		
+		return subareaDao.findSubareasGroupByProvince();
+	}
+
 }

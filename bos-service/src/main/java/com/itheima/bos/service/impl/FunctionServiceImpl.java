@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itheima.bos.dao.FunctionDao;
 import com.itheima.bos.domain.Function;
+import com.itheima.bos.domain.User;
 import com.itheima.bos.service.FunctionService;
+import com.itheima.bos.utils.BOSUtils;
 import com.itheima.bos.utils.PageBean;
 
 @Service
@@ -35,6 +37,19 @@ public class FunctionServiceImpl implements FunctionService {
 	public void queryPage(PageBean pageBean) {
 		// TODO Auto-generated method stub
 		functionDao.queryPageBean(pageBean);
+	}
+
+	@Override
+	public List<Function> findAllMenu() {
+		// TODO Auto-generated method stub
+		List<Function> list=null;
+		User user= BOSUtils.getLoginUser();
+		if(user.getUsername().equals("tom")){
+			list= functionDao.findAllMenu();
+		}else{
+			list=functionDao.findAllMenuByUser(user.getId());
+		}
+		return list;
 	}
 
 }

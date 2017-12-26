@@ -97,6 +97,13 @@ public class SubareaAction extends BaseAction<Subarea> {
 		return NONE;
 	}
 	
+	public String findSubareasGroupByProvince() throws Exception {
+		// TODO Auto-generated method stub
+		List<Object> list=subareaService.findSubareasGroupByProvince();
+		java2Json(list, new String[]{});
+		return NONE;
+	}
+	
 	public String listajax() throws Exception {
 		// TODO Auto-generated method stub
 		List<Subarea> subareas=subareaService.findSubareaNoDecidedzone();
