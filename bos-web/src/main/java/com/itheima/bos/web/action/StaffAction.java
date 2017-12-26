@@ -36,7 +36,6 @@ public class StaffAction extends BaseAction<Staff> {
 
 		return LIST;
 	}
-
 	public String pageQuery() throws Exception {
 		// TODO Auto-generated method stub
 

@@ -25,6 +25,8 @@ public class UserAction extends BaseAction<User> {
 	@Autowired
 	private UserService userService;
 
+	private String[] roleIds;
+
 	public String login() throws Exception {
 		// TODO Auto-generated method stub
 		String keycode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
@@ -49,6 +51,19 @@ public class UserAction extends BaseAction<User> {
 		}
 	}
 
+	public String add() throws Exception {
+		// TODO Auto-generated method stub
+		userService.save(model, roleIds);
+		return LIST;
+	}
+
+	public String queryPage() throws Exception {
+		// TODO Auto-generated method stub.
+		userService.queryPage(pageBean);
+		java2Json(pageBean, new String[]{"noticebills","roles"});
+		return NONE;
+	}
+
 	public String logout() throws Exception {
 		// TODO Auto-generated method stub
 		ServletActionContext.getRequest().getSession().invalidate();
@@ -69,6 +84,10 @@ public class UserAction extends BaseAction<User> {
 		ServletActionContext.getResponse().setContentType("text/html,charset=utf-8");
 		ServletActionContext.getResponse().getWriter().print(f);
 		return NONE;
+	}
+
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
 	}
 
 	public void setCheckcode(String checkcode) {

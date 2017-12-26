@@ -29,7 +29,7 @@ public class FunctionAction extends BaseAction<Function> {
 	public String listajax() throws Exception {
 		// TODO Auto-generated method stub
 		List<Function> list = functionService.findAll();
-		java2Json(list, new String[] { "parentFunction", "roles", "children" });
+		java2Json(list, new String[] { "parentFunction", "roles" });
 		return NONE;
 	}
 

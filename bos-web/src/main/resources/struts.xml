@@ -40,6 +40,7 @@
 		<action name="UserAction_*" class="userAction" method="{1}">
 			<result name="login">/login.jsp</result>
 			<result name="home">/index.jsp</result>
+			<result name="list">/WEB-INF/pages/admin/userlist.jsp</result>
 		</action>
 
 		<action name="StaffAction_*" class="staffAction" method="{1}">
@@ -64,9 +65,11 @@
 		<action name="WorkordermanageAction_*" class="workordermanageAction"
 			method="{1}">
 		</action>
-		<action name="FunctionAction_*" class="functionAction"
-			method="{1}">
+		<action name="FunctionAction_*" class="functionAction" method="{1}">
 			<result name="list">/WEB-INF/pages/admin/function.jsp</result>
+		</action>
+		<action name="RoleAction_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/role.jsp</result>
 		</action>
 	</package>
 </struts>
