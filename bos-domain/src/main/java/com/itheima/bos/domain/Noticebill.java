@@ -1,5 +1,6 @@
 package com.itheima.bos.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,16 +28,24 @@ public class Noticebill implements java.io.Serializable {
 	private Double weight;
 	private String volume;
 	private String remark;
-	private String ordertype;//分单类型：自动分单、人工分单
+	private String ordertype;// 分单类型：自动分单、人工分单
 	private Set workbills = new HashSet(0);
 
-	public static final String  ORDERTYPE_AUTO = "自动分单";
-	public static final String  ORDERTYPE_MAN = "人工分单";
-	
+	public static final String ORDERTYPE_AUTO = "自动分单";
+	public static final String ORDERTYPE_MAN = "人工分单";
+
 	// Constructors
 
 	/** default constructor */
 	public Noticebill() {
+	}
+
+	public String getPickdateString() {
+		if (pickdate != null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			return format.format(pickdate);
+		}
+		return null;
 	}
 
 	/** minimal constructor */
@@ -45,11 +54,9 @@ public class Noticebill implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Noticebill(String id, User user, Staff staff, String customerId,
-			String customerName, String delegater, String telephone,
-			String pickaddress, String arrivecity, String product,
-			Date pickdate, Integer num, Double weight, String volume,
-			String remark, String ordertype, Set workbills) {
+	public Noticebill(String id, User user, Staff staff, String customerId, String customerName, String delegater,
+			String telephone, String pickaddress, String arrivecity, String product, Date pickdate, Integer num,
+			Double weight, String volume, String remark, String ordertype, Set workbills) {
 		this.id = id;
 		this.user = user;
 		this.staff = staff;

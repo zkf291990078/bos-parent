@@ -45,4 +45,10 @@ public class RegionServiceImpl implements RegionService {
 		return regionDao.findDataByq(q);
 	}
 
+	@Override
+	public void save(Region model) {
+		// TODO Auto-generated method stub
+		regionDao.save(model);
+	}
+
 }

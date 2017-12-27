@@ -23,7 +23,7 @@ public class SubareaServiceImpl implements SubareaService {
 	@Override
 	public void edit(Subarea model) {
 		// TODO Auto-generated method stub
-		subareaDao.saveOrUpdate(model);
+		subareaDao.update(model);
 	}
 
 	@Override

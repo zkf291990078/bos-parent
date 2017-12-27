@@ -71,5 +71,8 @@
 		<action name="RoleAction_*" class="roleAction" method="{1}">
 			<result name="list">/WEB-INF/pages/admin/role.jsp</result>
 		</action>
+		<action name="WorkbillAction_*" class="workbillAction" method="{1}">
+			<result name="list">/WEB-INF/pages/qupai/diaodu.jsp</result>
+		</action>
 	</package>
 </struts>

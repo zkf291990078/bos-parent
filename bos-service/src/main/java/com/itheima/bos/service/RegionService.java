@@ -14,4 +14,6 @@ public interface RegionService {
 	public void queryPage(PageBean pageBean);
 
 	public List<Region> findDataByq(String q);
+
+	public void save(Region model);
 }

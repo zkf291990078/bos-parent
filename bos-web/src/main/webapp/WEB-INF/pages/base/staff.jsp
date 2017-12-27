@@ -39,6 +39,35 @@
 				$("#saveStaffForm").submit();
 			}
 		});
+		$.fn.serializeJson = function() {
+			var serializeObj = {};
+			var array = this.serializeArray();
+			$(array).each(
+					function() {
+						if (serializeObj[this.name]) {
+							if ($.isArray(serializeObj[this.name])) {
+								serializeObj[this.name].push(this.value);
+							} else {
+								serializeObj[this.name] = [
+										serializeObj[this.name], this.value ];
+							}
+						} else {
+							serializeObj[this.name] = this.value;
+						}
+					});
+			return serializeObj;
+		};
+		
+		$("#search").click(function() {
+			var p = $('#searchStaffForm').serializeJson();
+			console.info(p);
+			//调用数据表格的load方法，重新发送一次ajax请求，并且提交参数
+			$("#grid").datagrid("load", p);
+			//关闭查询窗口
+			$("#searchStaffWindow").window("close");
+
+		});
+
 		var reg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -58,7 +87,7 @@
 	}
 
 	function doView() {
-		alert("查看...");
+		$('#searchStaffWindow').window("open");
 	}
 
 	function doDelete() {
@@ -90,7 +119,27 @@
 	}
 
 	function doRestore() {
-		alert("将取派员还原...");
+		var rows = $('#grid').datagrid('getSelections');
+
+		if (rows.length > 0) {
+			$.messager.confirm("还原确认", "你确定要还原选中的取派员吗？", function(r) {
+				if (r) {
+					var array = new Array();
+					for (var i = 0; i < rows.length; i++) {
+						var staff = rows[i];//json对象
+						var id = staff.id;
+						array.push(id);
+					}
+					var ids = array.join(",");
+					location.href = "StaffAction_restoreBatch.action?ids="
+							+ ids;
+					;
+				}
+			});
+
+		} else {
+			$.messager.alert("标题", "请选择还原项", "warning");
+		}
 	}
 	//工具栏
 	var toolbar = [ {
@@ -103,17 +152,12 @@
 		text : '增加',
 		iconCls : 'icon-add',
 		handler : doAdd
-	},
-	
-	<shiro:hasPermission name="staff-delete">
-	{
+	}, {
 		id : 'button-delete',
 		text : '作废',
 		iconCls : 'icon-cancel',
 		handler : doDelete
-	}, 
-	</shiro:hasPermission>
-	{
+	}, {
 		id : 'button-save',
 		text : '还原',
 		iconCls : 'icon-save',
@@ -170,6 +214,7 @@
 	} ] ];
 
 	$(function() {
+
 		// 先将body隐藏，再显示，不会出现页面刷新效果
 		$("body").css({
 			visibility : "visible"
@@ -199,14 +244,28 @@
 			shadow : true,
 			closed : true,
 			height : 400,
-			resizable : false
+			resizable : false,
+			onBeforeClose : function() {
+				$('#addStaffWindow').form("clear");
+
+			}
+		});
+		// 添加查询取派员窗口
+		$('#searchStaffWindow').window({
+			title : '查询取派员',
+			width : 400,
+			modal : true,
+			shadow : true,
+			closed : true,
+			height : 400,
+			resizable : false,
 		});
 
 	});
 
 	function doDblClickRow(rowIndex, rowData) {
 		$('#addStaffWindow').window("open");
-		$('#addStaffWindow').form("load",rowData);
+		$('#addStaffWindow').form("load", rowData);
 	}
 </script>
 </head>
@@ -260,6 +319,38 @@
 						<td>取派标准</td>
 						<td><input type="text" name="standard"
 							class="easyui-validatebox" required="true" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+	<div class="easyui-window" title="对收派员进行查询" id="searchStaffWindow"
+		collapsible="false" minimizable="false" maximizable="false"
+		 style="top: 200px; left: 200px">
+
+		<div  style="overflow: auto; padding: 5px;"
+			border="false">
+			<form id="searchStaffForm" method="post">
+				<table class="table-edit" width="80%" align="center">
+					<tr class="title">
+						<td colspan="2">查询条件</td>
+					</tr>
+					<!-- TODO 这里完善收派员添加 table -->
+
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name"  /></td>
+					</tr>
+					<tr>
+						<td>手机</td>
+						<td><input type="text" name="telephone"
+							 /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><a id="search" href="#"
+							class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+						</td>
 					</tr>
 				</table>
 			</form>

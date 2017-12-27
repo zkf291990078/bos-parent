@@ -2,6 +2,8 @@ package com.itheima.bos.web.action;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,15 @@ public class NoticebillAction extends BaseAction<Noticebill> {
 		}
 
 		java2Json(customer, new String[] {});
+		return NONE;
+	}
+	
+	public String findnoassociations() throws Exception {
+		// TODO Auto-generated method stub
+	    DetachedCriteria criteria=	pageBean.getDetachedCriteria();
+	    criteria.add(Restrictions.eq("ordertype", "人工分单"));
+		noticebillService.queryPage(pageBean);
+		java2Json(pageBean, new String[]{"workbills","staff","user","currentPage","detachedCriteria","pageSize"});
 		return NONE;
 	}
 

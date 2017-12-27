@@ -17,4 +17,6 @@ public interface StaffService {
 
 	List<Staff> findStaffNoDele();
 
+	void restoreBatch(String ids);
+
 }

@@ -1,6 +1,7 @@
 package com.itheima.bos.service.impl;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.itheima.bos.domain.User;
 import com.itheima.bos.domain.Workbill;
 import com.itheima.bos.service.NoticebillService;
 import com.itheima.bos.utils.BOSUtils;
+import com.itheima.bos.utils.PageBean;
 import com.itheima.crm.ICustomerService;
 
 @Service
@@ -76,4 +78,11 @@ public class NoticebillServiceImpl implements NoticebillService {
 		}
 
 	}
+
+	@Override
+	public void queryPage(PageBean pageBean) {
+		// TODO Auto-generated method stub
+		noticebillDao.queryPageBean(pageBean);
+	}
+
 }

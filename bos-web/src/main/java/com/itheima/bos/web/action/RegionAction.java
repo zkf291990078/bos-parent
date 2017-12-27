@@ -66,10 +66,10 @@ public class RegionAction extends BaseAction<Region> {
 
 	public String list() throws Exception {
 		// TODO Auto-generated method stub
-		List<Region> regions=null;
-		if(StringUtils.isNoneBlank(q)){
-			regions=regionService.findDataByq(q);
-		}else{
+		List<Region> regions = null;
+		if (StringUtils.isNoneBlank(q)) {
+			regions = regionService.findDataByq(q);
+		} else {
 			regions = regionService.findAll();
 		}
 		java2Json(regions, new String[] { "subareas" });
@@ -79,8 +79,29 @@ public class RegionAction extends BaseAction<Region> {
 	public String pageQuery() throws Exception {
 		// TODO Auto-generated method stub
 		regionService.queryPage(pageBean);
-		java2Json(pageBean, new String[] { "currentPage", "detachedCriteria", "pageSize","subareas" });
+		java2Json(pageBean, new String[] { "currentPage", "detachedCriteria", "pageSize", "subareas" });
 		return NONE;
+	}
+
+	public String add() throws Exception {
+		// TODO Auto-generated method stub
+		String province = model.getProvince();
+		String city = model.getCity();
+		String district = model.getDistrict();
+		province = province.substring(0, province.length() - 1);
+		city = city.substring(0, city.length() - 1);
+		district = district.substring(0, district.length() - 1);
+
+		String info = province + city + district;
+		String[] headByString = PinYin4jUtils.getHeadByString(info);
+		String shortcode = StringUtils.join(headByString);
+		// 城市编码---->>shijiazhuang
+		String citycode = PinYin4jUtils.hanziToPinyin(city, "");
+
+		model.setShortcode(shortcode);
+		model.setCitycode(citycode);
+		regionService.save(model);
+		return LIST;
 	}
 
 	public void setRegionFile(File regionFile) {
@@ -90,6 +111,5 @@ public class RegionAction extends BaseAction<Region> {
 	public void setQ(String q) {
 		this.q = q;
 	}
-	
 
 }

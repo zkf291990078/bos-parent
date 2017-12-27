@@ -123,7 +123,7 @@
 		formatter : function(data, row, index) {
 			return row.id;
 		}
-	}, {
+	},  {
 		field : 'province',
 		title : '省',
 		width : 120,
@@ -259,10 +259,12 @@
 		});
 
 	});
-
-	function doDblClickRow() {
-		alert("双击表格数据...");
+	function doDblClickRow(rowIndex, rowData) {
+		$('#addSubareaWindow').window("open");
+		$('#addSubareaWindow').form("load", rowData);
+		$('#regionselect').combobox('select',rowData.region.id);
 	}
+
 </script>
 </head>
 <body class="easyui-layout" style="visibility: hidden;">
@@ -290,12 +292,12 @@
 					</tr>
 					<tr>
 						<td>分拣编码</td>
-						<td><input type="text" name="id" class="easyui-validatebox"
-							required="true" /></td>
+						<td><input type="text" name="id" class="easyui-validatebox" required="true" id="showid"
+							 /></td>
 					</tr>
 					<tr>
 						<td>选择区域</td>
-						<td><input class="easyui-combobox" name="region.id"
+						<td><input class="easyui-combobox" name="region.id" id="regionselect"
 							data-options="valueField:'id',textField:'name',mode:'remote',
     							url:'RegionAction_list.action'" />
 						</td>

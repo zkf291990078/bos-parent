@@ -28,13 +28,22 @@ public class SubareaAction extends BaseAction<Subarea> {
 
 	public String add() throws Exception {
 		// TODO Auto-generated method stub
-		// if (StringUtils.isNotBlank(model.getId())) {
-		// subareaService.edit(model);
-		// } else {
-
+		List<Subarea> list = subareaService.findAll();
+		for (Subarea s : list) {
+			if (model.getId().equals(s.getId())) {
+				s.setId(model.getId());
+				s.setAddresskey(model.getAddresskey());
+				s.setEndnum(model.getEndnum());
+				s.setDecidedzone(model.getDecidedzone());
+				s.setPosition(model.getPosition());
+				s.setRegion(model.getRegion());
+				s.setSingle(model.getSingle());
+				s.setStartnum(model.getStartnum());
+				subareaService.edit(s);
+				return LIST;
+			}
+		}
 		subareaService.save(model);
-		// }
-
 		return LIST;
 	}
 
@@ -96,18 +105,18 @@ public class SubareaAction extends BaseAction<Subarea> {
 		workbook.write(outputStream);
 		return NONE;
 	}
-	
+
 	public String findSubareasGroupByProvince() throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list=subareaService.findSubareasGroupByProvince();
-		java2Json(list, new String[]{});
+		List<Object> list = subareaService.findSubareasGroupByProvince();
+		java2Json(list, new String[] {});
 		return NONE;
 	}
-	
+
 	public String listajax() throws Exception {
 		// TODO Auto-generated method stub
-		List<Subarea> subareas=subareaService.findSubareaNoDecidedzone();
-		java2Json(subareas, new String[]{"decidedzone", "region"});
+		List<Subarea> subareas = subareaService.findSubareaNoDecidedzone();
+		java2Json(subareas, new String[] { "decidedzone", "region" });
 		return NONE;
 	}
 }

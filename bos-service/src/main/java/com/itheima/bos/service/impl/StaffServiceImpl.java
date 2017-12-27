@@ -54,4 +54,13 @@ public class StaffServiceImpl implements StaffService {
 		return staffDao.findDataByCriteria(criteria);
 	}
 
+	@Override
+	public void restoreBatch(String ids) {
+		// TODO Auto-generated method stub
+		String[] values = ids.split(",");
+		for (String id : values) {
+			staffDao.executeUpdate("staff.editDel_r", id);
+		}
+	}
+
 }

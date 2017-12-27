@@ -107,7 +107,12 @@
 		$("body").css({
 			visibility : "visible"
 		});
-
+		$("#save").click(function() {
+			var v = $("#saveRegionForm").form("validate");
+			if (v) {
+				$("#saveRegionForm").submit();
+			}
+		});
 		// 收派标准数据表格
 		$('#grid').datagrid({
 			iconCls : 'icon-forward',
@@ -165,10 +170,16 @@
 
 		<div region="center" style="overflow: auto; padding: 5px;"
 			border="false">
-			<form>
+			<form id="saveRegionForm" action="RegionAction_add.action"
+				method="post">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">区域信息</td>
+					</tr>
+					<tr>
+						<td>城市ID</td>
+						<td><input type="text" name="id" class="easyui-validatebox"
+							required="true" /></td>
 					</tr>
 					<tr>
 						<td>省</td>
@@ -190,7 +201,7 @@
 						<td><input type="text" name="postcode"
 							class="easyui-validatebox" required="true" /></td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td>简码</td>
 						<td><input type="text" name="shortcode"
 							class="easyui-validatebox" required="true" /></td>
@@ -199,7 +210,7 @@
 						<td>城市编码</td>
 						<td><input type="text" name="citycode"
 							class="easyui-validatebox" required="true" /></td>
-					</tr>
+					</tr> -->
 				</table>
 			</form>
 		</div>

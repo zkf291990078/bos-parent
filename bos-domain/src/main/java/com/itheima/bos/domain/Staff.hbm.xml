@@ -33,4 +33,5 @@
         </set>
     </class>
     <query name="staff.editDel">UPDATE Staff SET deltag=1 where id=?</query>
+     <query name="staff.editDel_r">UPDATE Staff SET deltag=0 where id=?</query>
 </hibernate-mapping>
