@@ -13,4 +13,6 @@ public interface FunctionDao extends IBaseDao<Function> {
 
 	List<Function> findAllMenuByUser(String id);
 
+	List<Function> finFunctionByRoleId(String roleId);
+
 }

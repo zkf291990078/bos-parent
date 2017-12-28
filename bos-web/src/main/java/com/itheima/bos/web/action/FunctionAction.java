@@ -16,6 +16,8 @@ public class FunctionAction extends BaseAction<Function> {
 
 	@Autowired
 	private FunctionService functionService;
+	
+	private String roleId;
 
 	public String add() throws Exception {
 		if (model.getParentFunction() != null && model.getParentFunction().getId().equals("")) {
@@ -48,4 +50,17 @@ public class FunctionAction extends BaseAction<Function> {
 		java2Json(list,  new String[] { "parentFunction", "roles", "children" });
 		return NONE;
 	}
+	
+	public String findFunctionsByRoleId() throws Exception {
+		// TODO Auto-generated method stub
+		List<Function> list= functionService.findFunctionsByRoleId(roleId);
+		java2Json(list, new String[] { "parentFunction", "roles", "children" });
+		return NONE;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+	
+	
 }

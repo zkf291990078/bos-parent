@@ -14,5 +14,7 @@ public interface FunctionService {
 	public void queryPage(PageBean pageBean);
 
 	public List<Function> findAllMenu();
+
+	public List<Function> findFunctionsByRoleId(String roleId);
 	
 }

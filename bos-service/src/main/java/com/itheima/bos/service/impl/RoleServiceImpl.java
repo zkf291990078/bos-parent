@@ -44,4 +44,17 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.findAll();
 	}
 
+	@Override
+	public void edit(Role model, String functionIds) {
+		// TODO Auto-generated method stub
+		String[] idStrings = functionIds.split(",");
+		for (String id : idStrings) {
+			Function function = new Function();
+			function.setId(id);
+			model.getFunctions().add(function);
+		}
+
+		roleDao.saveOrUpdate(model);
+	}
+
 }

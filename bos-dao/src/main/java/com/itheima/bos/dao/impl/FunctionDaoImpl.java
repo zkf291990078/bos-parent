@@ -42,4 +42,12 @@ public class FunctionDaoImpl extends BaseDaoImpl<Function> implements FunctionDa
 		return list;
 	}
 
+	@Override
+	public List<Function> finFunctionByRoleId(String roleId) {
+		// TODO Auto-generated method stub
+		String hql = "select distinct f from Function f left join f.roles r where r.id =?";
+		List<Function> list = (List<Function>) this.getHibernateTemplate().find(hql, roleId);
+		return list;
+	}
+
 }

@@ -35,6 +35,22 @@
 	type="text/javascript"></script>
 <script type="text/javascript">
 	$(function() {
+		// 点击保存
+		$('#edit').click(function() {
+			var v = $('#roleForm').form('validate');
+			if (v) {
+				var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+				var nodes = treeObj.getCheckedNodes(true);
+				var array = new Array();
+				for (var i = 0; i < nodes.length; i++) {
+					var id = nodes[i].id;
+					array.push(id);
+				}
+				var ids = array.join(",");
+				$('input[name=functionIds]').val(ids);
+				$('#roleForm').submit();
+			}
+		});
 		// 数据表格属性
 		$("#grid")
 				.datagrid(
@@ -87,13 +103,13 @@
 				enable : true,
 			}
 		};
-		
+
 		$.ajax({
 			url : 'FunctionAction_listajax.action',
 			type : 'POST',
 			dataType : 'json',
 			success : function(data) {
-			//	var zNodes = eval("(" + data + ")");
+				//	var zNodes = eval("(" + data + ")");
 				$.fn.zTree.init($("#functionTree"), setting, data);
 			},
 			error : function(msg) {
@@ -104,6 +120,20 @@
 	function doDblClickRow(rowIndex, rowData) {
 		$('#editRoleWindow').window("open");
 		$('#editRoleWindow').form("load", rowData);
+		$.post("FunctionAction_findFunctionsByRoleId.action", {
+			roleId : rowData.id
+		}, function(data) {
+			   //获取ztree对象
+			   var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+			   treeObj.expandAll(true);
+			  //遍历勾选角色关联的菜单数据
+			  for (var i = 0; i < data.length; i++) {
+			  //根据角色菜单节点数据的属性搜索，获取与完整菜单树完全匹配的节点JSON对象集合
+		      var nodes = treeObj.getNodesByParam("id", data[i].id, null);
+			          //勾选当前选中的节点
+		       treeObj.checkNode(nodes[0],true,false);
+			}
+		}, "json");
 	}
 </script>
 </head>
@@ -125,6 +155,7 @@
 					<tr class="title">
 						<td colspan="2">角色信息</td>
 						<input type="hidden" name="functionIds" />
+						<input type="hidden" name="id" />
 					</tr>
 
 					<tr>

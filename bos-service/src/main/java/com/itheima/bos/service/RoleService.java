@@ -13,6 +13,8 @@ public interface RoleService {
 	public void findPageQuery(PageBean pageBean);
 
 	public List<Role> findAll();
+
+	public void edit(Role model, String functionIds);
 	
 }
 

@@ -38,6 +38,12 @@ public class RoleAction extends BaseAction<Role> {
 		java2Json(list, new String[] { "functions", "users" });
 		return NONE;
 	}
+	public String edit() throws Exception {
+		// TODO Auto-generated method stub
+		roleService.edit(model, functionIds);
+		return LIST;
+	}
+	
 
 	public void setFunctionIds(String functionIds) {
 		this.functionIds = functionIds;

@@ -52,4 +52,10 @@ public class FunctionServiceImpl implements FunctionService {
 		return list;
 	}
 
+	@Override
+	public List<Function> findFunctionsByRoleId(String roleId) {
+		// TODO Auto-generated method stub
+		return functionDao.finFunctionByRoleId(roleId);
+	}
+
 }
